@@ -9,7 +9,7 @@ class Cam {
   PGraphics3D p3d;
   PMatrix3D proj, cam, modvw, modvwInv, screen2Model;
   
-  void initMatrix() {
+  void initMatrices() {
     p3d = (PGraphics3D) g;
     proj = new PMatrix3D();
     cam = new PMatrix3D();
@@ -18,51 +18,55 @@ class Cam {
     screen2Model = new PMatrix3D();
   }
   
-  void updateMatrix() {
+  PVector screenToWorldCoords(PVector p) {
     //proj = p3d.projection.get();
     cam = p3d.camera.get();
     //modvw = p3d.modelview.get();
     modvwInv = p3d.modelviewInv.get();
     screen2Model = modvwInv;
     screen2Model.apply(cam);
-    float screen[] = {mouseX, mouseY, poi.z};
+    float screen[] = { p.x, p.y, p.z };
     float model[] = new float[3];
     screen2Model.mult(screen, model);
     
-    mouse = new PVector(model[0] + (poi.x - width/2), model[1] + (poi.y - height/2), model[2]);
+    return new PVector(model[0] + (poi.x - width/2), model[1] + (poi.y - height/2), model[2]);
+  }
+  
+  void screenToWorldMouse() {
+    mouse = screenToWorldCoords(new PVector(mouseX, mouseY, poi.z));
   }
   
   Cam() {
     defaultPos();
     defaultPoi();
     defaultUp();
-    initMatrix();
+    initMatrices();
   }
   
   Cam(PVector _pos) {
     pos = _pos;
     defaultPoi();
     defaultUp();
-    initMatrix();
+    initMatrices();
   }
   
   Cam(PVector _pos, PVector _poi) {
     pos = _pos;
     poi = _poi;
     defaultUp();
-    initMatrix();
+    initMatrices();
   }
   
   Cam(PVector _pos, PVector _poi, PVector _up) {
     pos = _pos;
     poi = _poi;
     up = _up;
-    initMatrix();
+    initMatrices();
   }
   
   void update() {
     updateControls();
-    updateMatrix();
+    screenToWorldMouse();
   }
   
   void draw() {
