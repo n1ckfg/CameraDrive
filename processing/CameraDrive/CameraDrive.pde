@@ -20,6 +20,7 @@ void draw() {
   box(100);
   popMatrix();
   
+  updateControls();
   cam.run();
   
   for (int i=0; i<cubes.size(); i++) {

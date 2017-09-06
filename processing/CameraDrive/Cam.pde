@@ -71,7 +71,6 @@ class Cam {
   }
   
   void update() {
-    updateControls();
     screenToWorldMouse();
   }
   
