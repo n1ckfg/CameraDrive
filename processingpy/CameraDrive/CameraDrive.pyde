@@ -9,6 +9,7 @@ def setup():
     cam = Cam()
     cubes = []
     #~
+    setupControls()
     noStroke()
 
 def draw():

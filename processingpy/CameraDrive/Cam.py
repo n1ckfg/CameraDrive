@@ -6,24 +6,24 @@ class Cam(object):
         self.up = PVector(0,0,0)
         #~
         self.mouse = PVector(0,0,0)
-        self.p3d
-        self.proj
-        self.cam
-        self.modvw
-        self.modvwInv
-        self.screen2Model
+        self.p3d = PGraphics3D() #???
+        self.proj = PMatrix3D()
+        self.cam = PMatrix3D()
+        self.modvw = PMatrix3D()
+        self.modvwInv = PMatrix3D()
+        self.screen2Model = PMatrix3D()
         #~    
         self.displayText = ""
-        self.font
         self.fontSize = 12
+        self.font = createFont("Arial", self.fontSize)
         #~
-        defaultPos()
-        defaultPoi()
-        defaultUp()
-        setup()
+        self.defaultPos()
+        self.defaultPoi()
+        self.defaultUp()
+        self.setup()
         
     def setup(self):
-        self.p3d = (PGraphics3D) g
+        self.p3d = PMatrix3D() #(PGraphics3D) g
         self.proj = PMatrix3D()
         self.cam = PMatrix3D()
         self.modvw = PMatrix3D()
@@ -32,19 +32,19 @@ class Cam(object):
         #~       
         self.font = createFont("Arial", self.fontSize)
     
-    def screenToWorldCoords(self, p) {
-        cam = p3d.camera.get()
-        modvwInv = p3d.modelviewInv.get()
-        screen2Model = modvwInv
-        screen2Model.apply(cam)
+    def screenToWorldCoords(self, p):
+        self.cam = self.p3d.camera.get()
+        self.modvwInv = self.p3d.modelviewInv.get()
+        self.screen2Model = self.modvwInv
+        self.screen2Model.apply(self.cam)
         screen = [ p.x, p.y, p.z ]
         model = [ 0, 0, 0 ]
-        screen2Model.mult(screen, model)
+        self.screen2Model.mult(screen, model)
         #~        
         return PVector(model[0] + (poi.x - width/2), model[1] + (poi.y - height/2), model[2])
     
     def screenToWorldMouse(self):
-        mouse = self.screenToWorldCoords(PVector(mouseX, mouseY, poi.z))
+        mouse = self.screenToWorldCoords(PVector(mouseX, mouseY, self.poi.z))
     
     '''
     Cam():
@@ -83,7 +83,7 @@ class Cam(object):
         self.update()
         self.draw()
     
-    def move(self, x, y, z) {
+    def move(self, x, y, z):
         self.p = PVector(x,y,z)
         self.pos = self.pos.add(p)
         self.poi = self.poi.add(p)
@@ -109,14 +109,16 @@ class Cam(object):
         self.defaultUp()
     
     def drawText(self):
-        if (!self.displayText.equals("")) {
+        if (!self.displayText.equals("")):
             pushMatrix()    
             translate((self.pos.x - (width/2)) + (self.fontSize/2), (self.pos.y - (height/2)) + self.fontSize, self.poi.z)
             textFont(self.font, self.fontSize)
             text(self.displayText, 0, 0)
             popMatrix()
 
-// TODO
-// https://processing.org/reference/frustum_.html
-// https://processing.org/reference/beginCamera_.html
-// https://processing.org/reference/endCamera_.html
+'''
+TODO
+https://processing.org/reference/frustum_.html
+https://processing.org/reference/beginCamera_.html
+https://processing.org/reference/endCamera_.html
+'''
