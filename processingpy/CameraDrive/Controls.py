@@ -40,7 +40,7 @@ def updateControls():
     if (keyD) cam.move(delta,0,0)
     if (keyQ) cam.move(0,delta,0)
     if (keyE) cam.move(0,-delta,0)
-    
+    #~    
     if (keySpace):
         cam.reset()
         #keysOff() 

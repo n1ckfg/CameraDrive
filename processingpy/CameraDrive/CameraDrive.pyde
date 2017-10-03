@@ -1,35 +1,35 @@
-Cam cam;
+from Cam import *
+from Cube import *
+from Controls import *
 
-ArrayList<Cube> cubes;
+def setup():
+    size(1280, 720, P3D)
+    #~
+    global cam, cubes
+    cam = Cam()
+    cubes = []
+    #~
+    noStroke()
 
-void setup() {
-  size(1280, 720, P3D);
-  cam = new Cam();
-  cubes = new ArrayList<Cube>();
-  noStroke();
-}
+def draw():
+    lights()
+    background(0)
 
-void draw() {
-  lights();
-  background(0);
+    pushMatrix()
+    translate(width/2, height/2, 0)
+    rotateX(-PI/6)
+    rotateY(PI/3)
+    box(100)
+    popMatrix()
+    
+    updateControls()
+    cam.run()
+    
+    for cube in cubes:
+        cube.run()
 
-  pushMatrix();
-  translate(width/2, height/2, 0);
-  rotateX(-PI/6);
-  rotateY(PI/3);
-  box(100);
-  popMatrix();
-  
-  updateControls();
-  cam.run();
-  
-  for (int i=0; i<cubes.size(); i++) {
-    cubes.get(i).run();
-  }
+    surface.setTitle(""+frameRate)
 
-  surface.setTitle(""+frameRate);
-}
 
-void mousePressed() {
-  cubes.add(new Cube());
-}
+def mousePressed():
+    cubes.add(Cube())
