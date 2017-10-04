@@ -29,8 +29,8 @@ def draw():
     for cube in cubes:
         cube.run()
 
-    surface.setTitle(""+frameRate)
+    #surface.setTitle(""+frameRate)
 
 
 def mousePressed():
-    cubes.add(Cube())
+    cubes.append(Cube())

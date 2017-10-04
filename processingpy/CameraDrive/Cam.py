@@ -5,8 +5,8 @@ class Cam(object):
         self.poi = PVector(0,0,0)
         self.up = PVector(0,0,0)
         #~
+        self.p3d = g
         self.mouse = PVector(0,0,0)
-        self.p3d = PGraphics3D() #???
         self.proj = PMatrix3D()
         self.cam = PMatrix3D()
         self.modvw = PMatrix3D()
@@ -23,7 +23,6 @@ class Cam(object):
         self.setup()
         
     def setup(self):
-        self.p3d = PMatrix3D() #(PGraphics3D) g
         self.proj = PMatrix3D()
         self.cam = PMatrix3D()
         self.modvw = PMatrix3D()
@@ -33,7 +32,7 @@ class Cam(object):
         self.font = createFont("Arial", self.fontSize)
     
     def screenToWorldCoords(self, p):
-        self.cam = self.p3d.camera.get()
+        self.cam = self.p3d.modelview.get()
         self.modvwInv = self.p3d.modelviewInv.get()
         self.screen2Model = self.modvwInv
         self.screen2Model.apply(self.cam)
@@ -41,7 +40,7 @@ class Cam(object):
         model = [ 0, 0, 0 ]
         self.screen2Model.mult(screen, model)
         #~        
-        return PVector(model[0] + (poi.x - width/2), model[1] + (poi.y - height/2), model[2])
+        return PVector(model[0] + (self.poi.x - width/2), model[1] + (self.poi.y - height/2), model[2])
     
     def screenToWorldMouse(self):
         mouse = self.screenToWorldCoords(PVector(mouseX, mouseY, self.poi.z))
@@ -109,7 +108,7 @@ class Cam(object):
         self.defaultUp()
     
     def drawText(self):
-        if (!self.displayText.equals("")):
+        if (self.displayText != ""):
             pushMatrix()    
             translate((self.pos.x - (width/2)) + (self.fontSize/2), (self.pos.y - (height/2)) + self.fontSize, self.poi.z)
             textFont(self.font, self.fontSize)

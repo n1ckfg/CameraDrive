@@ -32,6 +32,7 @@ def checkKeyChar(k, b):
         keySpace = b
 
 def updateControls():
+    global camsdwadwa
     if (keyW):
         cam.move(0,0,-delta)
     if (keyS):
