@@ -9,7 +9,7 @@ def setup():
     cam = Cam()
     cubes = []
     #~
-    setupControls()
+    setupControls(cam)
     noStroke()
 
 def draw():
@@ -33,4 +33,5 @@ def draw():
 
 
 def mousePressed():
-    cubes.append(Cube())
+    global cam
+    cubes.append(Cube(cam))

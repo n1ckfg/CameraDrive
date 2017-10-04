@@ -15,9 +15,9 @@ class Cam {
 
   void init() {
     p3d = (PGraphics3D) g;
-    proj = new PMatrix3D();
+    //proj = new PMatrix3D();
     cam = new PMatrix3D();
-    modvw = new PMatrix3D();
+    //modvw = new PMatrix3D();
     modvwInv = new PMatrix3D();
     screen2Model = new PMatrix3D();
     
@@ -26,7 +26,7 @@ class Cam {
   
   PVector screenToWorldCoords(PVector p) {
     //proj = p3d.projection.get();
-    cam = p3d.camera.get();
+    cam = p3d.modelview.get(); //camera.get();
     //modvw = p3d.modelview.get();
     modvwInv = p3d.modelviewInv.get();
     screen2Model = modvwInv;

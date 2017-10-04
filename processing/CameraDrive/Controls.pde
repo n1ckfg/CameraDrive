@@ -1,5 +1,5 @@
-float deltaOrig = 1;
-float deltaFast = 10;
+float deltaOrig = 10;
+//float deltaFast = 10;
 float delta = deltaOrig;
 
 boolean keyW = false;

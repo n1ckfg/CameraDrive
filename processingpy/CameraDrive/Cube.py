@@ -1,5 +1,7 @@
 class Cube(object):
-    def __init__(self):
+    def __init__(self, _cam):
+        global cam
+        cam = _cam
         self.pos = cam.mouse
         self.rot = PVector(-PI/random(3,6), PI/random(3,6), 0)
              

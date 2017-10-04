@@ -7,9 +7,9 @@ class Cam(object):
         #~
         self.p3d = g
         self.mouse = PVector(0,0,0)
-        self.proj = PMatrix3D()
+        #self.proj = PMatrix3D()
         self.cam = PMatrix3D()
-        self.modvw = PMatrix3D()
+        #self.modvw = PMatrix3D()
         self.modvwInv = PMatrix3D()
         self.screen2Model = PMatrix3D()
         #~    
@@ -20,19 +20,9 @@ class Cam(object):
         self.defaultPos()
         self.defaultPoi()
         self.defaultUp()
-        self.setup()
-        
-    def setup(self):
-        self.proj = PMatrix3D()
-        self.cam = PMatrix3D()
-        self.modvw = PMatrix3D()
-        self.modvwInv = PMatrix3D()
-        self.screen2Model = PMatrix3D()
-        #~       
-        self.font = createFont("Arial", self.fontSize)
     
     def screenToWorldCoords(self, p):
-        self.cam = self.p3d.modelview.get()
+        self.cam = self.p3d.modelview.get() # camera.get()
         self.modvwInv = self.p3d.modelviewInv.get()
         self.screen2Model = self.modvwInv
         self.screen2Model.apply(self.cam)
@@ -43,7 +33,7 @@ class Cam(object):
         return PVector(model[0] + (self.poi.x - width/2), model[1] + (self.poi.y - height/2), model[2])
     
     def screenToWorldMouse(self):
-        mouse = self.screenToWorldCoords(PVector(mouseX, mouseY, self.poi.z))
+        self.mouse = self.screenToWorldCoords(PVector(mouseX, mouseY, self.poi.z))
     
     '''
     Cam():
@@ -83,7 +73,7 @@ class Cam(object):
         self.draw()
     
     def move(self, x, y, z):
-        self.p = PVector(x,y,z)
+        p = PVector(x,y,z)
         self.pos = self.pos.add(p)
         self.poi = self.poi.add(p)
     

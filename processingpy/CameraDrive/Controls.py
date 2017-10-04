@@ -1,6 +1,7 @@
-def setupControls():
-    global delta, keyW, keyA, keyS, keyD, keyQ, keyE, keySpace
-    delta = 50
+def setupControls(_cam):
+    global cam, delta, keyW, keyA, keyS, keyD, keyQ, keyE, keySpace
+    cam = _cam
+    delta = 10
     keyW = False
     keyA = False
     keyS = False
@@ -16,6 +17,7 @@ def keyReleased():
     checkKeyChar(key, False)
 
 def checkKeyChar(k, b):
+    global keyW, keyA, keyS, keyD, keyQ, keyE, keySpace
     if (k == 'w'):
         keyW = b 
     elif (k == 'a'):
@@ -32,7 +34,7 @@ def checkKeyChar(k, b):
         keySpace = b
 
 def updateControls():
-    global camsdwadwa
+    global cam, keyW, keyA, keyS, keyD, keyQ, keyE, keySpace
     if (keyW):
         cam.move(0,0,-delta)
     if (keyS):
