@@ -26,9 +26,10 @@ class Cam(object):
         self.modvwInv = self.p3d.modelviewInv.get()
         self.screen2Model = self.modvwInv
         self.screen2Model.apply(self.cam)
+        println(p);
         screen = [ p.x, p.y, p.z ]
         model = [ 0, 0, 0 ]
-        self.screen2Model.mult(screen, model)
+        model = self.screen2Model.mult(screen, model)
         #~        
         return PVector(model[0] + (self.poi.x - width/2), model[1] + (self.poi.y - height/2), model[2])
     

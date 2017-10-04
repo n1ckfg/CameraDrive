@@ -32,8 +32,8 @@ class Cam {
     screen2Model = modvwInv;
     screen2Model.apply(cam);
     float screen[] = { p.x, p.y, p.z };
-    float model[] = new float[3];
-    screen2Model.mult(screen, model);
+    float model[] = { 0, 0, 0 };
+    model = screen2Model.mult(screen, model);
     
     return new PVector(model[0] + (poi.x - width/2), model[1] + (poi.y - height/2), model[2]);
   }
