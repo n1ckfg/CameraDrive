@@ -27,7 +27,7 @@ class Cam {
     }
 
     init() {
-        this.p3d = g;
+        this.p3d = p5.RendererGL;
         //proj = new PMatrix3D();
         this.cam = new PMatrix3D();
         //modvw = new PMatrix3D();
