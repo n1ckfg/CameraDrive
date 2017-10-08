@@ -28,22 +28,22 @@ class Cam {
 
     init() {
         this.p3d = p5.RendererGL;
-        //proj = new PMatrix3D();
-        this.cam = new PMatrix3D();
-        //modvw = new PMatrix3D();
-        this.modvwInv = new PMatrix3D();
-        this.screen2Model = new PMatrix3D();
+        //proj = new p5.Matrix();
+        this.cam = new p5.Matrix();
+        //modvw = new p5.Matrix();
+        this.modvwInv = new p5.Matrix();
+        this.screen2Model = new p5.Matrix();
         
-        this.font = createFont("Arial", this.fontSize);
+        //this.font = createFont("Arial", this.fontSize);
     }
     
     screenToWorldCoords(p) {
         //proj = p3d.projection.get();
-        this.cam = this.p3d.modelview.get(); //camera.get();
+        this.cam = this.p3d.modelview;//get(); //camera.get();
         //modvw = p3d.modelview.get();
-        this.modvwInv = this.p3d.modelviewInv.get();
+        this.modvwInv = this.p3d.modelviewInv;//.get();
         this.screen2Model = this.modvwInv;
-        this.screen2Model.apply(this.cam);
+        this.screen2Model.applyMatrix(this.cam);
         var screen = [ this.p.x, this.p.y, this.p.z ];
         var model = [ 0, 0, 0 ];
         model = this.screen2Model.mult(screen, model);
@@ -52,7 +52,7 @@ class Cam {
     }
     
     screenToWorldMouse() {
-        this.mouse = screenToWorldCoords(createVector(mouseX, mouseY, this.poi.z));
+        this.mouse = this.screenToWorldCoords(createVector(mouseX, mouseY, this.poi.z));
     }
     
     update() {
@@ -103,7 +103,7 @@ class Cam {
         if (!this.displayText.equals("")) {
             push();    
             translate((this.pos.x - (width/2)) + (this.fontSize/2), (this.pos.y - (height/2)) + this.fontSize, this.poi.z);
-            textFont(this.font, this.fontSize);
+            //textFont(this.font, this.fontSize);
             text(this.displayText, 0, 0);
             pop();
         }

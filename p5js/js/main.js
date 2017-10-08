@@ -10,7 +10,7 @@ function setup() {
 }
 
 function draw() {
-  lights();
+  ambientLight(255);
   background(0);
 
   push();
