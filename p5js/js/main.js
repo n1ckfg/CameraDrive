@@ -3,8 +3,8 @@
 var cam, cubes;
 
 function setup() {
-  createCanvas(1280, 720, WEBGL);
-  cam = new Cam();
+  var canvas = createCanvas(1280, 720, WEBGL);
+  cam = new Cam(canvas);
   cubes = [];
   noStroke();
 }
@@ -23,7 +23,7 @@ function draw() {
   updateControls();
   cam.run();
   
-  for (var i=0; i<cubes.size(); i++) {
+  for (var i=0; i<cubes.length; i++) {
     cubes[i].run();
   }
 }
@@ -43,7 +43,7 @@ class Cube {
   run() {
     push();
     translate(this.pos.x, this.pos.y, this.pos.z);
-    rotateXYZ(this.rot.x, this.rot.y, this.rot.z);
+    this.rotateXYZ(this.rot.x, this.rot.y, this.rot.z);
     box(10);
     pop();
   }
