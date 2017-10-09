@@ -21,7 +21,7 @@ class Cam {
     }
 
     screenToWorldMouse() {
-        this.mouse = this.projectCanvasToWorld(this.canvas, (createVector(mouseX, mouseY, this.poi.z)));
+        this.mouse = this.projectCanvasToWorld(this.canvas, createVector(mouseX, mouseY, 1));//this.poi.z)));
     }
     
     update() {
@@ -29,7 +29,7 @@ class Cam {
     }
     
     draw() {
-        camera(this.pos.x, this.pos.y, this.pos.z, this.poi.x, this.poi.y, this.poi.z, this.up.x, this.up.y, this.up.z);
+        camera(this.pos.x, this.pos.y, this.pos.z);//, this.poi.x, this.poi.y, this.poi.z, this.up.x, this.up.y, this.up.z);
         this.drawText();
     }
     
