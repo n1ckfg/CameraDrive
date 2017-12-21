@@ -8,16 +8,25 @@ public class PlayerBullet : MonoBehaviour {
     public float lifeTime = 5f;
     public float speed = 0.1f;
 
-	private IEnumerator Start () {
-        yield return new WaitForSeconds(lifeTime);
-        PlayerBulletExplosion p = GameObject.Instantiate(explosionPrefab, transform.parent).GetComponent<PlayerBulletExplosion>();
-        p.gameObject.transform.position = transform.position;
+    private float birthTime = 0f;
 
-        Destroy(gameObject);
+	private IEnumerator Start () {
+        birthTime = Time.realtimeSinceStartup;
+        yield return new WaitForSeconds(lifeTime);
+        explode();
 	}
 
     private void Update() {
         transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, speed);
+    }
+
+    private void OnCollisionEnter(Collision col) {
+        if (Time.realtimeSinceStartup > birthTime + 0.1f) explode();
+    }
+
+    private void explode() {
+        PlayerBulletExplosion p = GameObject.Instantiate(explosionPrefab, transform.position, Quaternion.identity, transform.parent).GetComponent<PlayerBulletExplosion>();
+        Destroy(gameObject);
     }
 
 }

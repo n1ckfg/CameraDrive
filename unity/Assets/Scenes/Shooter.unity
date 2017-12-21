@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 926605853}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.34693983, g: 0.44117132, b: 0.5098152, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -394,6 +394,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 114481675188189290, guid: 395e8b8044b114d4684d282b870ece09,
     type: 2}
   bulletParent: {fileID: 1416042882}
+  fireTimeout: 0.2
 --- !u!114 &688837511
 MonoBehaviour:
   m_ObjectHideFlags: 0
