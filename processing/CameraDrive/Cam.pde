@@ -1,19 +1,33 @@
 // https://processing.org/reference/camera_.html
+import java.awt.Robot;
+
 class Cam {
 
   PVector pos = new PVector(0,0,0);
   PVector poi = new PVector(0,0,0);
   PVector up = new PVector(0,0,0);
 
+  PVector right = new PVector(1, 0, 0);
+  PVector forward = new PVector(0, 0, 1);
+  PVector velocity = new PVector(0, 0, 0);
+  float pan = 0;
+  float tilt = 0;
+  float sensitivity = 2;
+
   PVector mouse = new PVector(0,0,0);
+  
   PGraphics3D p3d;
   PMatrix3D proj, cam, modvw, modvwInv, screen2Model;
-  
+  Robot robot;
+    
   String displayText = "";
   PFont font;
   int fontSize = 12;
 
   void init() {
+    try {
+      robot = new Robot();
+    } catch (Exception e) { }
     p3d = (PGraphics3D) g;
     //proj = new PMatrix3D();
     cam = new PMatrix3D();
@@ -84,10 +98,45 @@ class Cam {
     draw();
   }
   
-  void move(float x, float y, float z) {
-    PVector p = new PVector(x,y,z);
+  void move(PVector p) {
     pos = pos.add(p);
     poi = poi.add(p);
+  }
+  
+  void rotation() {        
+    if (mouseX < 1 && (mouseY - pmouseX) < 0){
+      robot.mouseMove(width-2, mouseY);
+      mouseX = width-2;
+      pmouseX = width-2;
+    }
+        
+    if (mouseX > width-2 && (mouseX - pmouseX) > 0){
+      robot.mouseMove(2, mouseY);
+      mouseX = 2;
+      pmouseX = 2;
+    }
+    
+    if (mouseY < 1 && (mouseY - pmouseY) < 0){
+      robot.mouseMove(mouseX, height-2);
+      mouseY = height-2;
+      pmouseY = height-2;
+    }
+    
+    if (mouseY > height-1 && (mouseY - pmouseY) > 0){
+      robot.mouseMove(mouseX, 2);
+      mouseY = 2;
+      pmouseY = 2;
+    }
+    
+    pan += map(mouseX - pmouseX, 0, width, 0, TWO_PI) * sensitivity;
+    tilt += map(mouseY - pmouseY, 0, height, 0, PI) * sensitivity;
+    tilt = constrain(tilt, -PI/2.01, PI/2.01);
+    
+    if (tilt == PI/2) tilt += 0.001;
+
+    forward = new PVector(cos(pan), tan(tilt), sin(pan));
+    forward.normalize();
+    right = new PVector(cos(pan - PI/2), 0, sin(pan - PI/2));    
   }
   
   void defaultPos() {
