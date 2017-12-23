@@ -86,7 +86,7 @@ class Cam {
   }
   
   void screenToWorldMouse() {
-    click = screenToWorldCoords(new PVector(mouseX, mouseY, center.z));
+    click = screenToWorldCoords(new PVector(width-mouseX, height-mouseY, center.z));
   }
 
   void drawText() {
@@ -142,7 +142,9 @@ class Cam {
     forward = new PVector(cos(pan), tan(tilt), sin(pan));
     forward.normalize();
     right = new PVector(cos(pan - PI/2), 0, sin(pan - PI/2));
+    right.normalize();
     up = right.cross(forward);
+    up.normalize();
   }
   
   void updateRotation() {
@@ -166,14 +168,6 @@ class Cam {
   }
   
   void draw(){
-    /*
-    if (keys.containsKey('a') && keys.get('a')) velocity.add(PVector.mult(right, speed));
-    if (keys.containsKey('d') && keys.get('d')) velocity.sub(PVector.mult(right, speed));
-    if (keys.containsKey('w') && keys.get('w')) velocity.add(PVector.mult(forward, speed));
-    if (keys.containsKey('s') && keys.get('s')) velocity.sub(PVector.mult(forward, speed));
-    if (keys.containsKey('q') && keys.get('q')) velocity.add(PVector.mult(up, speed));
-    if (keys.containsKey('e') && keys.get('e')) velocity.sub(PVector.mult(up, speed));
-    */
     camera(position.x, position.y, position.z, center.x, center.y, center.z, up.x, up.y, up.z);
     drawText();
   }

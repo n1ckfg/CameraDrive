@@ -32,7 +32,12 @@ void draw() {
   cam.run();
   
   for (int i=0; i<cubes.size(); i++) {
-    cubes.get(i).run();
+    Cube cube = cubes.get(i);
+    if (cube.alive) {
+      cube.run();
+    } else {
+      cubes.remove(i);
+    }
   }
 
   surface.setTitle(""+frameRate);
