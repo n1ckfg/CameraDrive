@@ -50,26 +50,23 @@ boolean checkKeyCode(int k, boolean b) {
 }
 */
 
-void mouseMoved() {
-  cam.rotation();
-}
-
 void updateControls() {
-  /*
-  if (keyW) cam.move(cam.forward);
-  if (keyS) cam.move(cam.forward);
-  if (keyA) cam.move(cam.right);
-  if (keyD) cam.move(cam.right);
-  if (keyQ) cam.move(cam.up);
-  if (keyE) cam.move(cam.up);
-  */
+
+  if (keyW) cam.moveForward();
+  if (keyS) cam.moveBack();
+  if (keyA) cam.moveLeft();
+  if (keyD) cam.moveRight();
+  if (keyQ) cam.moveDown();
+  if (keyE) cam.moveUp();
   
+  /*
   if (keyW) cam.move(new PVector(0, 0, -delta));
   if (keyS) cam.move(new PVector(0, 0, delta));
   if (keyA) cam.move(new PVector(-delta, 0, 0));
   if (keyD) cam.move(new PVector(delta, 0, 0));
   if (keyQ) cam.move(new PVector(0, delta, 0));
   if (keyE) cam.move(new PVector(0, -delta, 0));
+  */
   
   if (keySpace) {
     cam.reset();

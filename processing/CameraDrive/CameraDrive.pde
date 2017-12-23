@@ -15,8 +15,16 @@ void draw() {
 
   pushMatrix();
   translate(width/2, height/2, 0);
-  rotateX(-PI/6);
-  rotateY(PI/3);
+  //rotateX(-PI/6);
+  //rotateY(PI/3);
+  box(100);
+  translate(100, 100, 0);
+  box(100);
+  translate(-100, 100, 0);
+  box(100);
+  translate(-100, -100, 0);
+  box(100);
+  translate(100, -100, 0);
   box(100);
   popMatrix();
   
