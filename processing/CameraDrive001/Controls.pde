@@ -51,22 +51,12 @@ boolean checkKeyCode(int k, boolean b) {
 */
 
 void updateControls() {
-
-  if (keyW) cam.moveForward();
-  if (keyS) cam.moveBack();
-  if (keyA) cam.moveLeft();
-  if (keyD) cam.moveRight();
-  if (keyQ) cam.moveDown();
-  if (keyE) cam.moveUp();
-  
-  /*
-  if (keyW) cam.move(new PVector(0, 0, -delta));
-  if (keyS) cam.move(new PVector(0, 0, delta));
-  if (keyA) cam.move(new PVector(-delta, 0, 0));
-  if (keyD) cam.move(new PVector(delta, 0, 0));
-  if (keyQ) cam.move(new PVector(0, delta, 0));
-  if (keyE) cam.move(new PVector(0, -delta, 0));
-  */
+  if (keyW) cam.move(0,0,-delta);
+  if (keyS) cam.move(0,0,delta);
+  if (keyA) cam.move(-delta,0,0);
+  if (keyD) cam.move(delta,0,0);
+  if (keyQ) cam.move(0,delta,0);
+  if (keyE) cam.move(0,-delta,0);
   
   if (keySpace) {
     cam.reset();
@@ -82,4 +72,8 @@ void keysOff() {
   keyQ = false;
   keyE = false;
   keySpace = false;
+}
+
+void mousePressed() {
+  cubes.add(new Cube());
 }

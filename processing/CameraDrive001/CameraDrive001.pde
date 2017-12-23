@@ -37,7 +37,3 @@ void draw() {
 
   surface.setTitle(""+frameRate);
 }
-
-void mousePressed() {
-  cubes.add(new Cube());
-}
