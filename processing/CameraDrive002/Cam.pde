@@ -12,6 +12,9 @@ import java.awt.GraphicsEnvironment;
 class Cam {
   
   boolean controllable;
+  boolean enablePosition = true;
+  boolean enableRotation = true;
+  boolean enableMouse = true;
   float speed;
   float sensitivity;
   PVector pos;
@@ -44,13 +47,7 @@ class Cam {
     controllable = true;
     speed = 3f;
     sensitivity = 2f;
-    pos = new PVector(0f, 0f, 0f);
-    up = new PVector(0f, 1f, 0f);
-    right = new PVector(1f, 0f, 0f);
-    forward = new PVector(0f, 0f, 1f);
-    velocity = new PVector(0f, 0f, 0f);
-    pan = 0f;
-    tilt = 0f;
+    reset();
     friction = 0.75f;
     //keys = new HashMap<Character, Boolean>();
 
@@ -163,9 +160,9 @@ class Cam {
   
   void update() {
     if (!controllable) return;
-    updateRotation();
-    updatePosition();
-    screenToWorldMouse();
+    if (enableMouse) screenToWorldMouse();
+    if (enableRotation) updateRotation();
+    if (enablePosition) updatePosition();
   }
   
   void draw(){
@@ -218,6 +215,31 @@ class Cam {
   
   void moveDown() {
     velocity.add(PVector.mult(up, speed));
+  }
+  
+  void defaultPos() {
+    pos = new PVector(0,0,0);
+    pos.x = width/2.0;
+    pos.y = height/2.0;
+    pos.z = (height/2.0) / tan(PI*30.0 / 180.0);
+  }
+  
+  void defaultPoi() {
+    poi = new PVector(0,0,0);
+    poi.x = width/2.0;
+    poi.y = height/2.0;
+    poi.z = 0;
+  }
+  
+  void reset() {
+    defaultPos();
+    defaultPoi();
+    up = new PVector(0, 1, 0);
+    right = new PVector(1, 0, 0);
+    forward = new PVector(0, 0, 1);
+    velocity = new PVector(0, 0, 0);
+    pan = 0f;
+    tilt = 0f;
   }
   
 }

@@ -62,6 +62,8 @@ void updateControls() {
     cam.reset();
     //keysOff();  
   }
+  
+  if (mousePressed) cubes.add(new Cube());
 }
 
 void keysOff() {
@@ -72,8 +74,4 @@ void keysOff() {
   keyQ = false;
   keyE = false;
   keySpace = false;
-}
-
-void mousePressed() {
-  cubes.add(new Cube());
 }

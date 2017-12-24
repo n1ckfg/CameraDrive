@@ -67,7 +67,7 @@ void updateControls() {
   */
   
   if (keySpace) {
-    //cam.reset();
+    cam.reset();
   }
   
   if (mousePressed) cubes.add(new Cube());
