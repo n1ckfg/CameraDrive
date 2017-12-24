@@ -25,9 +25,9 @@ class Cam {
   PVector up;
   PVector right;
   PVector forward;
-  Point mouse;
-  Point prevMouse;
-  PVector click;
+  Point rotMouse;
+  Point pRotMouse;
+  PVector mouse;
   //HashMap<Character, Boolean> keys;
 
   PGraphics3D p3d;
@@ -80,13 +80,13 @@ class Cam {
     float model[] = { 0, 0, 0 };
     model = screen2Model.mult(screen, model);
     
-    PVector returns = new PVector(model[0] + (center.x - width/2), model[1] + (center.y - height/2), model[2]);
+    PVector returns = new PVector(model[0] + center.x, model[1] + center.y, model[2]);
     println(returns);
     return returns;
   }
   
   void screenToWorldMouse() {
-    click = screenToWorldCoords(new PVector(width-mouseX, height-mouseY, center.z));
+    mouse = screenToWorldCoords(new PVector(mouseX, mouseY, center.z));
   }
 
   void drawText() {
@@ -100,40 +100,40 @@ class Cam {
   }
   
   void getRotFromMouse() {
-    mouse = MouseInfo.getPointerInfo().getLocation();
-    if (prevMouse == null) prevMouse = new Point(mouse.x, mouse.y);
+    rotMouse = MouseInfo.getPointerInfo().getLocation();
+    if (pRotMouse == null) pRotMouse = new Point(rotMouse.x, rotMouse.y);
     
     int w = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
     int h = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
     
-    if (mouse.x < 1 && (mouse.x - prevMouse.x) < 0){
-      robot.mouseMove(w-2, mouse.y);
-      mouse.x = w-2;
-      prevMouse.x = w-2;
+    if (rotMouse.x < 1 && (rotMouse.x - pRotMouse.x) < 0){
+      robot.mouseMove(w-2, rotMouse.y);
+      rotMouse.x = w-2;
+      pRotMouse.x = w-2;
     }
         
-    if (mouse.x > w-2 && (mouse.x - prevMouse.x) > 0){
-      robot.mouseMove(2, mouse.y);
-      mouse.x = 2;
-      prevMouse.x = 2;
+    if (rotMouse.x > w-2 && (rotMouse.x - pRotMouse.x) > 0){
+      robot.mouseMove(2, rotMouse.y);
+      rotMouse.x = 2;
+      pRotMouse.x = 2;
     }
     
-    if (mouse.y < 1 && (mouse.y - prevMouse.y) < 0){
-      robot.mouseMove(mouse.x, h-2);
-      mouse.y = h-2;
-      prevMouse.y = h-2;
+    if (rotMouse.y < 1 && (rotMouse.y - pRotMouse.y) < 0){
+      robot.mouseMove(rotMouse.x, h-2);
+      rotMouse.y = h-2;
+      pRotMouse.y = h-2;
     }
     
-    if (mouse.y > h-1 && (mouse.y - prevMouse.y) > 0){
-      robot.mouseMove(mouse.x, 2);
-      mouse.y = 2;
-      prevMouse.y = 2;
+    if (rotMouse.y > h-1 && (rotMouse.y - pRotMouse.y) > 0){
+      robot.mouseMove(rotMouse.x, 2);
+      rotMouse.y = 2;
+      pRotMouse.y = 2;
     }
   }
   
   void calcPanTilt() {
-    pan += map((width-mouse.x) - (width-prevMouse.x), 0, width, 0, TWO_PI) * sensitivity;
-    tilt += map((height-mouse.y) - (height-prevMouse.y), 0, height, 0, PI) * sensitivity;
+    pan += map((width-rotMouse.x) - (width-pRotMouse.x), 0, width, 0, TWO_PI) * sensitivity;
+    tilt += map((height-rotMouse.y) - (height-pRotMouse.y), 0, height, 0, PI) * sensitivity;
     tilt = clamp(tilt, -PI/2.01f, PI/2.01f);  
     if (tilt == PI/2) tilt += 0.001f;
   }
@@ -151,7 +151,7 @@ class Cam {
     getRotFromMouse();
     calcPanTilt();
     calcDirections();
-    prevMouse = new Point(mouse.x, mouse.y);
+    pRotMouse = new Point(rotMouse.x, rotMouse.y);
   }
   
   void updatePosition() {

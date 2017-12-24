@@ -7,7 +7,7 @@ class Cube {
   boolean alive = true;
   
   Cube() {
-    pos = cam.click;
+    pos = cam.mouse;
     rot = new PVector(-PI/random(3,6), PI/random(3,6), 0);
     birthTime = millis();
     lifeTime *= 1000;
