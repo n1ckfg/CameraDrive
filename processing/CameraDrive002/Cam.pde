@@ -77,7 +77,7 @@ class Cam {
     float model[] = { 0, 0, 0 };
     model = screen2Model.mult(screen, model);
     
-    PVector returns = new PVector(model[0] + poi.x, model[1] + poi.y, model[2]);
+    PVector returns = new PVector(model[0] + (poi.x - width/2), model[1] + (poi.y - height/2), model[2]);
     println(returns);
     return returns;
   }
@@ -146,23 +146,27 @@ class Cam {
   }
   
   void updateRotation() {
-    getRotFromMouse();
-    calcPanTilt();
+    if (enableRotation) {
+      getRotFromMouse();
+      calcPanTilt();
+    }
     calcDirections();
-    pRotMouse = new Point(rotMouse.x, rotMouse.y);
+    if (enableRotation) pRotMouse = new Point(rotMouse.x, rotMouse.y);
   }
   
   void updatePosition() {
-    velocity.mult(friction);
-    pos.add(velocity);
+    if (enablePosition) {
+      velocity.mult(friction);
+      pos.add(velocity);
+    }
     poi = PVector.add(pos, forward);
   }
   
   void update() {
     if (!controllable) return;
+    updateRotation();
+    updatePosition();
     if (enableMouse) screenToWorldMouse();
-    if (enableRotation) updateRotation();
-    if (enablePosition) updatePosition();
   }
   
   void draw(){

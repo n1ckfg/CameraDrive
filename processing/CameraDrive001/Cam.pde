@@ -35,7 +35,8 @@ class Cam {
     float model[] = { 0, 0, 0 };
     model = screen2Model.mult(screen, model);
     
-    return new PVector(model[0] + (poi.x - width/2), model[1] + (poi.y - height/2), model[2]);
+    PVector returns = new PVector(model[0] + (poi.x - width/2), model[1] + (poi.y - height/2), model[2]);
+    return returns;
   }
   
   void screenToWorldMouse() {
