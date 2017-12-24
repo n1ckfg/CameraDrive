@@ -14,14 +14,14 @@ class Cam {
   boolean controllable;
   float speed;
   float sensitivity;
-  PVector position;
+  PVector pos;
   float pan;
   float tilt;
   PVector velocity;
   float friction;
 
   Robot robot;
-  PVector center;
+  PVector poi;
   PVector up;
   PVector right;
   PVector forward;
@@ -44,7 +44,7 @@ class Cam {
     controllable = true;
     speed = 3f;
     sensitivity = 2f;
-    position = new PVector(0f, 0f, 0f);
+    pos = new PVector(0f, 0f, 0f);
     up = new PVector(0f, 1f, 0f);
     right = new PVector(1f, 0f, 0f);
     forward = new PVector(0f, 0f, 1f);
@@ -57,7 +57,7 @@ class Cam {
     //perspective(PI/3f, (float)width/(float)height, 0.01f, 1000f);
     
     font = createFont("Arial", fontSize);
-    initMats();
+    initMats(); 
   }
   
   void initMats() {
@@ -80,19 +80,19 @@ class Cam {
     float model[] = { 0, 0, 0 };
     model = screen2Model.mult(screen, model);
     
-    PVector returns = new PVector(model[0] + center.x, model[1] + center.y, model[2]);
+    PVector returns = new PVector(model[0] + poi.x, model[1] + poi.y, model[2]);
     println(returns);
     return returns;
   }
   
   void screenToWorldMouse() {
-    mouse = screenToWorldCoords(new PVector(mouseX, mouseY, center.z));
+    mouse = screenToWorldCoords(new PVector(mouseX, mouseY, poi.z));
   }
 
   void drawText() {
     if (!displayText.equals("")) {
       pushMatrix();  
-      translate((position.x - (width/2)) + (fontSize/2), (position.y - (height/2)) + fontSize, center.z);
+      translate((pos.x - (width/2)) + (fontSize/2), (pos.y - (height/2)) + fontSize, poi.z);
       textFont(font, fontSize);
       text(displayText, 0, 0);
       popMatrix();
@@ -130,10 +130,11 @@ class Cam {
       pRotMouse.y = 2;
     }
   }
-  
+    
   void calcPanTilt() {
     pan += map((width-rotMouse.x) - (width-pRotMouse.x), 0, width, 0, TWO_PI) * sensitivity;
     tilt += map((height-rotMouse.y) - (height-pRotMouse.y), 0, height, 0, PI) * sensitivity;
+    
     tilt = clamp(tilt, -PI/2.01f, PI/2.01f);  
     if (tilt == PI/2) tilt += 0.001f;
   }
@@ -156,8 +157,8 @@ class Cam {
   
   void updatePosition() {
     velocity.mult(friction);
-    position.add(velocity);
-    center = PVector.add(position, forward);
+    pos.add(velocity);
+    poi = PVector.add(pos, forward);
   }
   
   void update() {
@@ -168,7 +169,7 @@ class Cam {
   }
   
   void draw(){
-    camera(position.x, position.y, position.z, center.x, center.y, center.z, up.x, up.y, up.z);
+    camera(pos.x, pos.y, pos.z, poi.x, poi.y, poi.z, up.x, up.y, up.z);
     drawText();
   }
   
